@@ -2,32 +2,33 @@ name: Daily Dividend Update
 
 on:
   schedule:
-    # 매일 한국 시간 오전 8시 (UTC 시간 23시)에 자동으로 실행되도록 설정
+    # 매일 한국 시간 오전 8시 (UTC 23:00)
     - cron: '0 23 * * *'
-  workflow_dispatch: # 필요할 때 수동으로 바로 실행할 수 있는 버튼 활성화
+  workflow_dispatch: # 수동 실행 버튼
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: 저장소 코드 가져오기
-      uses: actions/checkout@v3
+      - name: 저장소 코드 가져오기
+        uses: actions/checkout@v3
 
-    - name: 파이썬 설치
-      uses: actions/setup-python@v4
-      with:
-        python-python-version: '3.10'
+      - name: 파이썬 설치
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'   # ← 수정: python-python-version → python-version
 
-    - name: 필요 라이브러리 설치
-      run: |
-        pip install yfinance pytz requests beautifulsoup4
+      - name: 필요 라이브러리 설치
+        run: |
+          pip install yfinance pytz requests
 
-    - name: 파이썬 스크립트 실행 (데이터 수집)
-      run: python update_shares.py
+      - name: 파이썬 스크립트 실행 (데이터 수집)
+        run: python update_shares.py
 
-    - name: 변경된 데이터를 깃허브에 push
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add data.json
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update daily dividend data" && git push)
+      - name: 변경된 데이터를 깃허브에 push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update daily dividend data" && git push)
