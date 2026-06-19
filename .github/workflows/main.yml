@@ -31,7 +31,16 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add data.json
-          git diff --staged --quiet && echo "변경 없음" && exit 0
+          
+          # 변경사항이 없으면 조용히 종료
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+            exit 0
+          fi
+          
           git commit -m "Update daily dividend data"
-          git pull --rebase origin main
-          git push
+          
+          # 원격 저장소와 강제로 싱크를 맞춘 후 push (에러 방지)
+          git fetch origin main
+          git rebase origin/main
+          git push origin main
