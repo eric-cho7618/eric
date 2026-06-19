@@ -1,36 +1,91 @@
 import json
 import requests
-import yfinance as yf
+from bs4 import BeautifulSoup
 from datetime import datetime
 import pytz
+import time
 
-# 네이버 증권 ETF 전체 리스트 API
-url = "https://finance.naver.com/api/sise/etfItemList.naver"
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Referer': 'https://finance.naver.com/'
 }
 
-result_list = []
-
-try:
-    res = requests.get(url, headers=headers, timeout=10)
+# ─────────────────────────────────────────────
+# Step 1. 네이버 ETF 전체 리스트에서 배당 키워드 종목 수집
+# ─────────────────────────────────────────────
+def get_dividend_etf_list():
+    url = "https://finance.naver.com/api/sise/etfItemList.naver"
+    res = requests.get(url, headers=headers, timeout=15)
     res.raise_for_status()
     data = res.json()
-
     etf_list = data.get('result', {}).get('etfItemList', [])
     print(f"전체 ETF 수: {len(etf_list)}")
 
-    # 고배당 관련 키워드 필터링
     keywords = ['배당', '고배당', '커버드콜', '프리미엄', '타겟', 'DIVIDEND', 'Yield']
-    dividend_etfs = [
-        item for item in etf_list
-        if any(kw in item.get('itemname', '') for kw in keywords)
+    filtered = [
+        e for e in etf_list
+        if any(kw in e.get('itemname', '') for kw in keywords)
     ]
-    print(f"배당 키워드 ETF 수: {len(dividend_etfs)}")
+    print(f"배당 키워드 ETF 수: {len(filtered)}")
+    return filtered
 
-    result_candidates = []
+# ─────────────────────────────────────────────
+# Step 2. 네이버 ETF 상세 페이지에서 배당수익률 파싱
+# ─────────────────────────────────────────────
+def get_yield_from_naver(code):
+    url = f"https://finance.naver.com/etf/etfProfile.naver?code={code}"
+    try:
+        res = requests.get(url, headers=headers, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
 
-    for item in dividend_etfs:
+        # 배당수익률 테이블에서 파싱
+        # "분배율" 또는 "배당수익률" 텍스트 옆 값 찾기
+        rows = soup.select('table.tb_compare tr')
+        for row in rows:
+            th = row.find('th')
+            td = row.find('td')
+            if th and td:
+                label = th.get_text(strip=True)
+                if '분배율' in label or '배당수익률' in label or 'yield' in label.lower():
+                    val = td.get_text(strip=True).replace('%', '').replace(',', '').strip()
+                    try:
+                        return float(val)
+                    except:
+                        pass
+
+        # 대안: 분배금수익률 div 파싱
+        for tag in soup.find_all(['td', 'dd', 'span']):
+            text = tag.get_text(strip=True)
+            if '%' in text:
+                val = text.replace('%', '').strip()
+                try:
+                    v = float(val)
+                    if 0.5 < v < 50:  # 합리적 배당률 범위
+                        return v
+                except:
+                    pass
+    except Exception as e:
+        print(f"  [{code}] 파싱 오류: {e}")
+    return 0.0
+
+# ─────────────────────────────────────────────
+# Step 3. KRX API로 현재가 보완 (네이버 nowVal 우선 사용)
+# ─────────────────────────────────────────────
+def get_etf_price(code, fallback_price):
+    if fallback_price and fallback_price > 0:
+        return f"{int(fallback_price):,}원"
+    return "-"
+
+# ─────────────────────────────────────────────
+# Main
+# ─────────────────────────────────────────────
+result_list = []
+
+try:
+    filtered_etfs = get_dividend_etf_list()
+    candidates = []
+
+    for item in filtered_etfs:
         code = item.get('itemcode', '')
         name = item.get('itemname', '')
         price = item.get('nowVal', 0)
@@ -38,37 +93,28 @@ try:
         if not code:
             continue
 
-        # yfinance로 배당률 조회 (KRX 종목은 {code}.KS)
-        try:
-            ticker = yf.Ticker(f"{code}.KS")
-            info = ticker.info
-            # dividendYield는 소수 (예: 0.08 = 8%), 없으면 0
-            raw_yield = info.get('dividendYield') or info.get('yield') or 0.0
-            yield_percent = round(float(raw_yield) * 100, 2)
-        except Exception as e:
-            print(f"  [{code}] yfinance 오류: {e}")
-            yield_percent = 0.0
+        yield_pct = get_yield_from_naver(code)
+        time.sleep(0.3)  # 과도한 요청 방지
 
-        if yield_percent <= 0:
+        if yield_pct <= 0:
+            print(f"  [{code}] {name} → 배당률 없음, 스킵")
             continue
 
-        result_candidates.append({
+        candidates.append({
             "ticker": code,
             "name": name,
-            "price": f"{int(price):,}원" if price else "-",
-            "yield": yield_percent,
+            "price": get_etf_price(code, price),
+            "yield": round(yield_pct, 2),
             "market": "KR"
         })
-        print(f"  [{code}] {name} → {yield_percent}%")
+        print(f"  [{code}] {name} → {yield_pct}%")
 
-    # 배당률 높은 순 TOP 10
-    result_list = sorted(result_candidates, key=lambda x: x['yield'], reverse=True)[:10]
-    print(f"최종 TOP {len(result_list)}개 선정 완료")
+    result_list = sorted(candidates, key=lambda x: x['yield'], reverse=True)[:10]
+    print(f"\n최종 TOP {len(result_list)}개 선정 완료")
 
 except Exception as e:
     print(f"Error: {e}")
 
-# 데이터 없을 경우 방어 처리
 if not result_list:
     result_list = [{
         "ticker": "-",
@@ -78,14 +124,10 @@ if not result_list:
         "market": "KR"
     }]
 
-# 한국 시간 기준 업데이트 시각
 seoul_tz = pytz.timezone('Asia/Seoul')
 now = datetime.now(seoul_tz).strftime('%Y-%m-%d %H:%M:%S')
 
-output_data = {
-    "updated_at": now,
-    "list": result_list
-}
+output_data = {"updated_at": now, "list": result_list}
 
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(output_data, f, ensure_ascii=False, indent=4)
