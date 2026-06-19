@@ -1,32 +1,74 @@
 {
-    "updated_at": "2026-06-19 16:26:11",
+    "updated_at": "2026-06-19 16:30:30",
     "list": [
         {
-            "ticker": "458730",
-            "name": "TIGER 미국배당+7%프리미엄다우존스",
-            "price": "10,250원",
-            "yield": 10.45,
+            "ticker": "0086C0",
+            "name": "TIGER 리츠부동산인프라10채권혼합액티브",
+            "price": "9,950원",
+            "yield": 0.0,
             "market": "KR"
         },
         {
-            "ticker": "486290",
-            "name": "PLUS 미국배당커버드콜고배당",
-            "price": "9,840원",
-            "yield": 9.82,
+            "ticker": "0040X0",
+            "name": "SOL 팔란티어미국채커버드콜혼합",
+            "price": "9,940원",
+            "yield": 0.0,
             "market": "KR"
         },
         {
-            "ticker": "472150",
-            "name": "KODEX 미국나스닥100데일리커버드콜",
-            "price": "10,120원",
-            "yield": 9.51,
+            "ticker": "0086B0",
+            "name": "TIGER 리츠부동산인프라TOP10액티브",
+            "price": "9,900원",
+            "yield": 0.0,
             "market": "KR"
         },
         {
-            "ticker": "161510",
-            "name": "ARIRANG 고배당주",
-            "price": "13,850원",
-            "yield": 5.41,
+            "ticker": "0207Z0",
+            "name": "KIWOOM 미국우주데이터센터인프라",
+            "price": "9,615원",
+            "yield": 0.0,
+            "market": "KR"
+        },
+        {
+            "ticker": "0153P0",
+            "name": "ACE 리츠부동산인프라액티브",
+            "price": "9,595원",
+            "yield": 0.0,
+            "market": "KR"
+        },
+        {
+            "ticker": "490600",
+            "name": "RISE 미국배당100데일리고정커버드콜",
+            "price": "9,575원",
+            "yield": 0.0,
+            "market": "KR"
+        },
+        {
+            "ticker": "0013R0",
+            "name": "RISE 테슬라미국채타겟커버드콜혼합(합성)",
+            "price": "9,550원",
+            "yield": 0.0,
+            "market": "KR"
+        },
+        {
+            "ticker": "0004G0",
+            "name": "1Q 미국배당TOP30",
+            "price": "9,420원",
+            "yield": 0.0,
+            "market": "KR"
+        },
+        {
+            "ticker": "473330",
+            "name": "SOL 미국30년국채커버드콜(합성)",
+            "price": "9,410원",
+            "yield": 0.0,
+            "market": "KR"
+        },
+        {
+            "ticker": "472830",
+            "name": "RISE 미국30년국채커버드콜(합성)",
+            "price": "9,340원",
+            "yield": 0.0,
             "market": "KR"
         }
     ]
