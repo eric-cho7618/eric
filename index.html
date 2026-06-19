@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>월간 고배당률 TOP 리스트</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif; max-width: 1000px; margin: 20px auto; padding: 0 15px; background-color: #f4f6f9; color: #333; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif; max-width: 1050px; margin: 20px auto; padding: 0 15px; background-color: #f4f6f9; color: #333; }
         h1 { color: #1e272e; text-align: center; font-size: 1.6rem; margin-bottom: 5px; font-weight: 800; }
         .update-time { text-align: center; color: #7f8c8d; font-size: 0.85rem; margin-bottom: 20px; }
         
         .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.08); background: white; margin-bottom: 30px; }
-        table { width: 100%; border-collapse: collapse; min-width: 750px; }
+        table { width: 100%; border-collapse: collapse; min-width: 850px; }
         th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid #eaeded; font-size: 0.95rem; white-space: nowrap; }
         th { background-color: #2c3e50; color: white; font-weight: 600; position: sticky; top: 0; }
         tr:nth-child(even) { background-color: #f8f9fa; }
         tr:hover { background-color: #edf2f7; }
         
-        .badge { padding: 5px 9px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; color: white; display: inline-block; }
-        .badge-kr { background-color: #2ecc71; }
+        .badge-kr { background-color: #2ecc71; padding: 5px 9px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; color: white; }
         .ticker-box { background: #f1f2f6; padding: 3px 7px; border-radius: 4px; font-family: monospace; color: #2f3542; }
     </style>
 </head>
@@ -32,15 +31,16 @@
                 <tr>
                     <th>순위</th>
                     <th>시장</th>
-                    <th>티커/코드</th>
+                    <th>코드</th>
                     <th style="text-align: left; min-width: 220px;">종목명</th>
                     <th>현재가</th>
                     <th>1년 상승률</th>
-                    <th>월 배당금</th>
+                    <th>연 배당 횟수</th>
+                    <th>최근 분배금</th>
                 </tr>
             </thead>
             <tbody id="dividend-table">
-                <tr><td colspan="7">데이터를 동기화하는 중입니다...</td></tr>
+                <tr><td colspan="8">실시간 실제 공시 데이터를 동기화 중입니다...</td></tr>
             </tbody>
         </table>
     </div>
@@ -59,18 +59,19 @@
 
                     const row = `<tr>
                         <td style="font-weight: bold; color: #57606f;">${index + 1}</td>
-                        <td><span class="badge badge-kr">한국</span></td>
+                        <td><span class="badge-kr">한국</span></td>
                         <td><span class="ticker-box">${item.ticker}</span></td>
                         <td style="text-align: left; white-space: normal; word-break: break-all; font-weight: 500;">${item.name}</td>
                         <td style="font-weight: 600;">${item.price}</td>
                         <td style="${returnColor}">${returnVal}</td>
+                        <td style="color: #7f8c8d; font-weight: bold;">${item.pay_times || '연 12회'}</td>
                         <td style="color: #27ae60; font-weight: bold; font-size: 1.05rem;">${item.dividend}</td>
                     </tr>`;
                     tbody.innerHTML += row;
                 });
             })
             .catch(err => {
-                document.getElementById('dividend-table').innerHTML = `<tr><td colspan="7">데이터 로드 실패</td></tr>`;
+                document.getElementById('dividend-table').innerHTML = `<tr><td colspan="8">데이터 로드 실패</td></tr>`;
             });
     </script>
 </body>
