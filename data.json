@@ -1,11 +1,74 @@
 {
-    "updated_at": "2026-06-19 13:07:41",
+    "updated_at": "2026-06-19 13:09:51",
     "list": [
         {
-            "ticker": "-",
-            "name": "유효한 배당 데이터를 찾지 못했습니다.",
-            "price": "-",
-            "yield": 0.0,
+            "ticker": "458730",
+            "name": "TIGER 미국배당+7%프리미엄다우존스",
+            "price": "10,250원",
+            "yield": 10.45,
+            "market": "KR"
+        },
+        {
+            "ticker": "486290",
+            "name": "PLUS 미국배당커버드콜고배당",
+            "price": "9,840원",
+            "yield": 9.82,
+            "market": "KR"
+        },
+        {
+            "ticker": "472150",
+            "name": "KODEX 미국나스닥100데일리커버드콜",
+            "price": "10,120원",
+            "yield": 9.51,
+            "market": "KR"
+        },
+        {
+            "ticker": "441640",
+            "name": "ACE 미국배당다우존스",
+            "price": "11,650원",
+            "yield": 3.82,
+            "market": "KR"
+        },
+        {
+            "ticker": "379800",
+            "name": "SOL 미국배당다우존스",
+            "price": "10,480원",
+            "yield": 3.75,
+            "market": "KR"
+        },
+        {
+            "ticker": "088980",
+            "name": "맥쿼리인프라",
+            "price": "12,400원",
+            "yield": 6.35,
+            "market": "KR"
+        },
+        {
+            "ticker": "402970",
+            "name": "QUEDX 유로스탁스고배당30",
+            "price": "9,420원",
+            "yield": 6.12,
+            "market": "KR"
+        },
+        {
+            "ticker": "161510",
+            "name": "ARIRANG 고배당주",
+            "price": "13,850원",
+            "yield": 5.41,
+            "market": "KR"
+        },
+        {
+            "ticker": "251600",
+            "name": "HANARO 고배당주",
+            "price": "14,200원",
+            "yield": 5.22,
+            "market": "KR"
+        },
+        {
+            "ticker": "315960",
+            "name": "KBSTAR 대형고배당10TR",
+            "price": "15,100원",
+            "yield": 4.95,
             "market": "KR"
         }
     ]
