@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>월간 고배당률 리스트</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background-color: #f9f9f9; }
+        h1 { color: #333; text-align: center; }
+        .update-time { text-align: right; color: #666; font-size: 0.9rem; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { padding: 12px 15px; text-align: center; border-bottom: 1px solid #ddd; }
+        th { background-color: #007bff; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .positive { color: #d9534f; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>📅 월간 고배당률 TOP 리스트</h1>
+    <div class="update-time" id="update-time">업데이트 중...</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>순위</th>
+                <th>티커 (Ticker)</th>
+                <th>종목명 (Name)</th>
+                <th>현재가 ($)</th>
+                <th>배당률 (Yield)</th>
+            </tr>
+        </thead>
+        <tbody id="dividend-table">
+            <!-- 데이터가 여기에 자동으로 들어갑니다 -->
+            <tr><td colspan="5">데이터를 불러오는 중입니다...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        // 매일 업데이트될 data.json 파일을 읽어와 화면에 표시합니다.
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('update-time').innerText = `최근 업데이트: ${data.updated_at}`;
+                const tbody = document.getElementById('dividend-table');
+                tbody.innerHTML = '';
+
+                data.list.forEach((item, index) => {
+                    const row = `<tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${item.ticker}</strong></td>
+                        <td>${item.name}</td>
+                        <td>$${item.price}</td>
+                        <td class="positive">${item.yield}%</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(err => {
+                document.getElementById('dividend-table').innerHTML = `<tr><td colspan="5">데이터를 불러오지 못했습니다. (아직 첫 자동 수집 전일 수 있습니다)</td></tr>`;
+            });
+    </script>
+</body>
+</html>
