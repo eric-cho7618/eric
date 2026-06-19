@@ -1,74 +1,84 @@
 {
-    "updated_at": "2026-06-19 16:30:30",
+    "updated_at": "2026-06-19 16:35:17",
     "list": [
         {
-            "ticker": "0086C0",
-            "name": "TIGER 리츠부동산인프라10채권혼합액티브",
-            "price": "9,950원",
-            "yield": 0.0,
+            "ticker": "498400",
+            "name": "KODEX 200타겟위클리커버드콜",
+            "price": "28,460원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "0040X0",
-            "name": "SOL 팔란티어미국채커버드콜혼합",
-            "price": "9,940원",
-            "yield": 0.0,
+            "ticker": "458730",
+            "name": "TIGER 미국배당다우존스",
+            "price": "15,405원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "0086B0",
-            "name": "TIGER 리츠부동산인프라TOP10액티브",
-            "price": "9,900원",
-            "yield": 0.0,
+            "ticker": "161510",
+            "name": "PLUS 고배당주",
+            "price": "25,625원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "0207Z0",
-            "name": "KIWOOM 미국우주데이터센터인프라",
-            "price": "9,615원",
-            "yield": 0.0,
+            "ticker": "472150",
+            "name": "TIGER 배당커버드콜액티브",
+            "price": "29,040원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "0153P0",
-            "name": "ACE 리츠부동산인프라액티브",
-            "price": "9,595원",
-            "yield": 0.0,
+            "ticker": "486290",
+            "name": "TIGER 미국나스닥100타겟데일리커버드콜",
+            "price": "12,345원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "490600",
-            "name": "RISE 미국배당100데일리고정커버드콜",
-            "price": "9,575원",
-            "yield": 0.0,
+            "ticker": "441640",
+            "name": "KODEX 미국배당커버드콜액티브",
+            "price": "13,455원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "0013R0",
-            "name": "RISE 테슬라미국채타겟커버드콜혼합(합성)",
-            "price": "9,550원",
-            "yield": 0.0,
+            "ticker": "441800",
+            "name": "TIME Korea플러스배당액티브",
+            "price": "37,290원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "0004G0",
-            "name": "1Q 미국배당TOP30",
-            "price": "9,420원",
-            "yield": 0.0,
+            "ticker": "446720",
+            "name": "SOL 미국배당다우존스",
+            "price": "14,100원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "473330",
-            "name": "SOL 미국30년국채커버드콜(합성)",
-            "price": "9,410원",
-            "yield": 0.0,
+            "ticker": "475720",
+            "name": "RISE 200위클리커버드콜",
+            "price": "16,135원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         },
         {
-            "ticker": "472830",
-            "name": "RISE 미국30년국채커버드콜(합성)",
-            "price": "9,340원",
-            "yield": 0.0,
+            "ticker": "494300",
+            "name": "KODEX 미국나스닥100데일리커버드콜OTM",
+            "price": "10,955원",
+            "dividend": "확인 필요",
+            "yield": 4.52,
             "market": "KR"
         }
     ]
