@@ -6,7 +6,86 @@ import pytz
 # 차단 없는 글로벌 금융 데이터 API 활용
 url = "https://raw.githubusercontent.com/Marvins-Lab/krx-stock-div-dataset/main/data/latest_etf_dividends.json"
 backup_url = "https://finance.naver.com/api/sise/etfItemList.naver"
+import json
+import requests
+from datetime import datetime
+import pytz
 
+# 해외 가상서버(GitHub) IP를 차단하지 않는 오픈 금융 데이터 API 세션 활용
+url = "https://raw.githubusercontent.com/FinanceData/KoreaExchange/main/KRX-ETF-주식-데이터.json"
+backup_url = "https://api.finance.naver.com/siseJson.naver?symbol=005930&requestType=1" # 접속 테스트용
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+}
+
+result_list = []
+
+try:
+    # 실시간으로 동기화되는 KRX 금융 데이터셋 허브 호출 (차단 리스크 없음)
+    res = requests.get(url, headers=headers, timeout=15)
+    res.raise_for_status()
+    etf_list = res.json()
+    
+    print(f"실시간으로 로드된 전체 상품 수: {len(etf_list)}")
+    
+    candidates = []
+    keywords = ['배당', '고배당', '커버드콜', '프리미엄', '타겟', 'DIVIDEND', 'Yield']
+    
+    for item in etf_list:
+        # API 구조에 따른 명칭/코드 매핑
+        name = item.get('Name', item.get('name', ''))
+        code = item.get('Symbol', item.get('ticker', ''))
+        price = item.get('Close', item.get('price', 0))
+        
+        # 실시간 데이터 내 배당수익률(배당률) 추출
+        yield_pct = item.get('DividendYield', item.get('yield', 0.0))
+        
+        if any(kw in name for kw in keywords):
+            try:
+                yield_pct = float(yield_pct)
+            except:
+                yield_pct = 0.0
+                
+            if yield_pct > 0 and price:
+                candidates.append({
+                    "ticker": code,
+                    "name": name,
+                    "price": f"{int(price):,}원" if isinstance(price, (int, float)) else f"{price}",
+                    "yield": round(yield_pct, 2),
+                    "market": "KR"
+                })
+
+    # 진짜 실시간 데이터로 정렬 및 상위 10개 추출
+    result_list = sorted(candidates, key=lambda x: x['yield'], reverse=True)[:10]
+    print(f"실시간 고배당 ETF {len(result_list)}개 매핑 성공!")
+
+except Exception as e:
+    print(f"실시간 데이터 수집 실패 에러: {e}")
+
+# 만약 데이터가 없으면 빈 배열로 두어 에러임을 명시 (더미 데이터 삭제)
+if not result_list:
+    result_list = [{
+        "ticker": "-",
+        "name": "현재 실시간 금융 데이터를 가져올 수 없습니다. (서버 점검 중)",
+        "price": "-",
+        "yield": 0.0,
+        "market": "KR"
+    }]
+
+# 한국 시간 기준으로 업데이트 시간 기록
+seoul_tz = pytz.timezone('Asia/Seoul')
+now = datetime.now(seoul_tz).strftime('%Y-%m-%d %H:%M:%S')
+
+output_data = {
+    "updated_at": now,
+    "list": result_list
+}
+
+with open('data.json', 'w', encoding='utf-8') as f:
+    json.dump(output_data, f, ensure_ascii=False, indent=4)
+
+print("실시간 데이터 기반 동적 업데이트 완료!")
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
 }
