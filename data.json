@@ -1,275 +1,275 @@
 {
-    "updated_at": "2026-06-19 17:04:28",
+    "updated_at": "2026-06-19 17:08:33",
     "list": [
         {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라 top_5",
-            "price": "88,815원",
-            "dividend": "480원",
-            "return_1y": "+674.83%",
-            "market": "KR",
-            "sort_rate": 674.83
-        },
-        {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라 top_10",
-            "price": "88,815원",
-            "dividend": "480원",
-            "return_1y": "+667.33%",
-            "market": "KR",
-            "sort_rate": 667.33
-        },
-        {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라 top_15",
-            "price": "88,815원",
-            "dividend": "480원",
-            "return_1y": "+659.83%",
-            "market": "KR",
-            "sort_rate": 659.83
-        },
-        {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라 top_20",
-            "price": "88,815원",
-            "dividend": "480원",
-            "return_1y": "+652.33%",
-            "market": "KR",
-            "sort_rate": 652.33
-        },
-        {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라 top_25",
-            "price": "88,815원",
-            "dividend": "480원",
-            "return_1y": "+644.83%",
-            "market": "KR",
-            "sort_rate": 644.83
-        },
-        {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라 top_30",
-            "price": "88,815원",
-            "dividend": "480원",
-            "return_1y": "+637.33%",
-            "market": "KR",
-            "sort_rate": 637.33
-        },
-        {
             "ticker": "472150",
-            "name": "TIGER 배당커버드콜액티브 top_2",
-            "price": "29,040원",
-            "dividend": "140원",
-            "return_1y": "+222.57%",
+            "name": "TIGER 배당커버드콜액티브",
+            "price": "29,330원",
+            "dividend": "234원",
+            "return_1y": "+221.77%",
             "market": "KR",
-            "sort_rate": 222.57
+            "sort_rate": 221.76999999999998
         },
         {
             "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜 top_1",
+            "name": "KODEX 200타겟위클리커버드콜",
             "price": "28,460원",
-            "dividend": "125원",
+            "dividend": "227원",
             "return_1y": "+216.47%",
             "market": "KR",
             "sort_rate": 216.47
         },
         {
             "ticker": "472150",
-            "name": "TIGER 배당커버드콜액티브 top_7",
-            "price": "29,040원",
-            "dividend": "140원",
-            "return_1y": "+215.07%",
+            "name": "TIGER 배당커버드콜액티브",
+            "price": "31,072원",
+            "dividend": "248원",
+            "return_1y": "+207.97%",
             "market": "KR",
-            "sort_rate": 215.07
+            "sort_rate": 207.97
         },
         {
             "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜 top_6",
-            "price": "28,460원",
-            "dividend": "125원",
-            "return_1y": "+208.97%",
+            "name": "KODEX 200타겟위클리커버드콜",
+            "price": "30,167원",
+            "dividend": "241원",
+            "return_1y": "+202.67%",
             "market": "KR",
-            "sort_rate": 208.97
+            "sort_rate": 202.67
         },
         {
             "ticker": "472150",
-            "name": "TIGER 배당커버드콜액티브 top_12",
-            "price": "29,040원",
-            "dividend": "140원",
-            "return_1y": "+207.57%",
+            "name": "TIGER 배당커버드콜액티브",
+            "price": "32,815원",
+            "dividend": "262원",
+            "return_1y": "+194.17%",
             "market": "KR",
-            "sort_rate": 207.57
+            "sort_rate": 194.17
         },
         {
             "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜 top_11",
-            "price": "28,460원",
-            "dividend": "125원",
-            "return_1y": "+201.47%",
+            "name": "KODEX 200타겟위클리커버드콜",
+            "price": "31,875원",
+            "dividend": "255원",
+            "return_1y": "+188.87%",
             "market": "KR",
-            "sort_rate": 201.47
+            "sort_rate": 188.87
         },
         {
             "ticker": "472150",
-            "name": "TIGER 배당커버드콜액티브 top_17",
-            "price": "29,040원",
-            "dividend": "140원",
-            "return_1y": "+200.07%",
+            "name": "TIGER 배당커버드콜액티브",
+            "price": "34,557원",
+            "dividend": "276원",
+            "return_1y": "+180.37%",
             "market": "KR",
-            "sort_rate": 200.07
+            "sort_rate": 180.37
         },
         {
             "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜 top_16",
-            "price": "28,460원",
-            "dividend": "125원",
-            "return_1y": "+193.97%",
+            "name": "KODEX 200타겟위클리커버드콜",
+            "price": "33,582원",
+            "dividend": "268원",
+            "return_1y": "+175.07%",
             "market": "KR",
-            "sort_rate": 193.97
+            "sort_rate": 175.07
+        },
+        {
+            "ticker": "367760",
+            "name": "RISE 네트워크인프라",
+            "price": "92,367원",
+            "dividend": "738원",
+            "return_1y": "+171.05%",
+            "market": "KR",
+            "sort_rate": 171.05
         },
         {
             "ticker": "472150",
-            "name": "TIGER 배당커버드콜액티브 top_22",
-            "price": "29,040원",
-            "dividend": "140원",
-            "return_1y": "+192.57%",
+            "name": "TIGER 배당커버드콜액티브",
+            "price": "36,300원",
+            "dividend": "290원",
+            "return_1y": "+166.57%",
             "market": "KR",
-            "sort_rate": 192.57
+            "sort_rate": 166.57
         },
         {
             "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜 top_21",
-            "price": "28,460원",
-            "dividend": "125원",
-            "return_1y": "+186.47%",
+            "name": "KODEX 200타겟위클리커버드콜",
+            "price": "35,290원",
+            "dividend": "282원",
+            "return_1y": "+161.27%",
             "market": "KR",
-            "sort_rate": 186.47
+            "sort_rate": 161.27
         },
         {
-            "ticker": "472150",
-            "name": "TIGER 배당커버드콜액티브 top_27",
-            "price": "29,040원",
-            "dividend": "140원",
-            "return_1y": "+185.07%",
+            "ticker": "367760",
+            "name": "RISE 네트워크인프라",
+            "price": "97,696원",
+            "dividend": "781원",
+            "return_1y": "+157.25%",
             "market": "KR",
-            "sort_rate": 185.07
+            "sort_rate": 157.25
         },
         {
-            "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜 top_26",
-            "price": "28,460원",
-            "dividend": "125원",
-            "return_1y": "+178.97%",
+            "ticker": "367760",
+            "name": "RISE 네트워크인프라",
+            "price": "103,025원",
+            "dividend": "824원",
+            "return_1y": "+143.45%",
             "market": "KR",
-            "sort_rate": 178.97
+            "sort_rate": 143.45
+        },
+        {
+            "ticker": "367760",
+            "name": "RISE 네트워크인프라",
+            "price": "108,354원",
+            "dividend": "866원",
+            "return_1y": "+129.65%",
+            "market": "KR",
+            "sort_rate": 129.65
+        },
+        {
+            "ticker": "367760",
+            "name": "RISE 네트워크인프라",
+            "price": "113,683원",
+            "dividend": "909원",
+            "return_1y": "+115.85%",
+            "market": "KR",
+            "sort_rate": 115.85000000000001
         },
         {
             "ticker": "161510",
-            "name": "PLUS 고배당주 top_4",
-            "price": "25,625원",
-            "dividend": "115원",
-            "return_1y": "+43.69%",
+            "name": "PLUS 고배당주",
+            "price": "26,393원",
+            "dividend": "211원",
+            "return_1y": "+41.29%",
             "market": "KR",
-            "sort_rate": 43.69
-        },
-        {
-            "ticker": "161510",
-            "name": "PLUS 고배당주 top_9",
-            "price": "25,625원",
-            "dividend": "115원",
-            "return_1y": "+36.19%",
-            "market": "KR",
-            "sort_rate": 36.19
+            "sort_rate": 41.29
         },
         {
             "ticker": "458730",
-            "name": "TIGER 미국배당다우존스 top_3",
-            "price": "15,405원",
-            "dividend": "90원",
-            "return_1y": "+34.63%",
+            "name": "TIGER 미국배당다우존스",
+            "price": "15,713원",
+            "dividend": "125원",
+            "return_1y": "+33.03%",
             "market": "KR",
-            "sort_rate": 34.63
+            "sort_rate": 33.03
         },
         {
             "ticker": "161510",
-            "name": "PLUS 고배당주 top_14",
-            "price": "25,625원",
-            "dividend": "115원",
-            "return_1y": "+28.69%",
+            "name": "PLUS 고배당주",
+            "price": "27,931원",
+            "dividend": "223원",
+            "return_1y": "+27.49%",
             "market": "KR",
-            "sort_rate": 28.689999999999998
+            "sort_rate": 27.49
         },
         {
             "ticker": "458730",
-            "name": "TIGER 미국배당다우존스 top_8",
-            "price": "15,405원",
-            "dividend": "90원",
-            "return_1y": "+27.13%",
+            "name": "TIGER 미국배당다우존스",
+            "price": "16,637원",
+            "dividend": "133원",
+            "return_1y": "+19.23%",
             "market": "KR",
-            "sort_rate": 27.130000000000003
+            "sort_rate": 19.230000000000004
         },
         {
             "ticker": "161510",
-            "name": "PLUS 고배당주 top_19",
-            "price": "25,625원",
-            "dividend": "115원",
-            "return_1y": "+21.19%",
-            "market": "KR",
-            "sort_rate": 21.189999999999998
-        },
-        {
-            "ticker": "458730",
-            "name": "TIGER 미국배당다우존스 top_13",
-            "price": "15,405원",
-            "dividend": "90원",
-            "return_1y": "+19.63%",
-            "market": "KR",
-            "sort_rate": 19.630000000000003
-        },
-        {
-            "ticker": "161510",
-            "name": "PLUS 고배당주 top_24",
-            "price": "25,625원",
-            "dividend": "115원",
+            "name": "PLUS 고배당주",
+            "price": "29,468원",
+            "dividend": "235원",
             "return_1y": "+13.69%",
             "market": "KR",
             "sort_rate": 13.689999999999998
         },
         {
-            "ticker": "458730",
-            "name": "TIGER 미국배당다우존스 top_18",
-            "price": "15,405원",
-            "dividend": "90원",
-            "return_1y": "+12.13%",
+            "ticker": "329200",
+            "name": "TIGER 리츠부동산인프라",
+            "price": "4,299원",
+            "dividend": "34원",
+            "return_1y": "+7.72%",
             "market": "KR",
-            "sort_rate": 12.130000000000003
+            "sort_rate": 7.719999999999999
+        },
+        {
+            "ticker": "458730",
+            "name": "TIGER 미국배당다우존스",
+            "price": "17,561원",
+            "dividend": "140원",
+            "return_1y": "+5.43%",
+            "market": "KR",
+            "sort_rate": 5.430000000000007
         },
         {
             "ticker": "161510",
-            "name": "PLUS 고배당주 top_29",
-            "price": "25,625원",
-            "dividend": "115원",
-            "return_1y": "+6.19%",
+            "name": "PLUS 고배당주",
+            "price": "31,006원",
+            "dividend": "248원",
+            "return_1y": "-0.11%",
             "market": "KR",
-            "sort_rate": 6.189999999999998
+            "sort_rate": -0.10999999999999943
+        },
+        {
+            "ticker": "329200",
+            "name": "TIGER 리츠부동산인프라",
+            "price": "4,545원",
+            "dividend": "36원",
+            "return_1y": "-6.08%",
+            "market": "KR",
+            "sort_rate": -6.079999999999998
         },
         {
             "ticker": "458730",
-            "name": "TIGER 미국배당다우존스 top_23",
-            "price": "15,405원",
-            "dividend": "90원",
-            "return_1y": "+4.63%",
+            "name": "TIGER 미국배당다우존스",
+            "price": "18,486원",
+            "dividend": "147원",
+            "return_1y": "-8.37%",
             "market": "KR",
-            "sort_rate": 4.630000000000003
+            "sort_rate": -8.369999999999997
+        },
+        {
+            "ticker": "161510",
+            "name": "PLUS 고배당주",
+            "price": "32,543원",
+            "dividend": "260원",
+            "return_1y": "-13.91%",
+            "market": "KR",
+            "sort_rate": -13.909999999999997
+        },
+        {
+            "ticker": "329200",
+            "name": "TIGER 리츠부동산인프라",
+            "price": "4,791원",
+            "dividend": "38원",
+            "return_1y": "-19.88%",
+            "market": "KR",
+            "sort_rate": -19.879999999999995
         },
         {
             "ticker": "458730",
-            "name": "TIGER 미국배당다우존스 top_28",
-            "price": "15,405원",
-            "dividend": "90원",
-            "return_1y": "-2.87%",
+            "name": "TIGER 미국배당다우존스",
+            "price": "19,410원",
+            "dividend": "155원",
+            "return_1y": "-22.17%",
             "market": "KR",
-            "sort_rate": -2.8699999999999974
+            "sort_rate": -22.169999999999995
+        },
+        {
+            "ticker": "329200",
+            "name": "TIGER 리츠부동산인프라",
+            "price": "5,036원",
+            "dividend": "40원",
+            "return_1y": "-33.68%",
+            "market": "KR",
+            "sort_rate": -33.68
+        },
+        {
+            "ticker": "329200",
+            "name": "TIGER 리츠부동산인프라",
+            "price": "5,282원",
+            "dividend": "42원",
+            "return_1y": "-47.48%",
+            "market": "KR",
+            "sort_rate": -47.47999999999999
         }
     ]
 }
