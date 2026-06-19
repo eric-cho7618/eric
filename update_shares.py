@@ -1,6 +1,5 @@
 import json
 import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
 import pytz
 import time
@@ -11,7 +10,7 @@ headers = {
 }
 
 # ─────────────────────────────────────────────
-# Step 1. 네이버 ETF 전체 리스트에서 배당 키워드 종목 수집
+# Step 1. 네이버 ETF 전체 리스트 + 현재가 수집
 # ─────────────────────────────────────────────
 def get_dividend_etf_list():
     url = "https://finance.naver.com/api/sise/etfItemList.naver"
@@ -30,51 +29,46 @@ def get_dividend_etf_list():
     return filtered
 
 # ─────────────────────────────────────────────
-# Step 2. 네이버 ETF 상세 페이지에서 배당수익률 파싱
+# Step 2. 네이버 ETF 분배금 API로 연간 배당률 계산
+#   /etf/etfDividendList.naver?etfCd={code}
+#   → 최근 12개월 분배금 합산 / 현재가 * 100
 # ─────────────────────────────────────────────
-def get_yield_from_naver(code):
-    url = f"https://finance.naver.com/etf/etfProfile.naver?code={code}"
+def get_yield_from_dividend_api(code, current_price):
+    if not current_price or current_price <= 0:
+        return 0.0
     try:
+        url = f"https://finance.naver.com/etf/etfDividendList.naver?etfCd={code}"
         res = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(res.text, 'html.parser')
+        data = res.json()
 
-        # 배당수익률 테이블에서 파싱
-        # "분배율" 또는 "배당수익률" 텍스트 옆 값 찾기
-        rows = soup.select('table.tb_compare tr')
-        for row in rows:
-            th = row.find('th')
-            td = row.find('td')
-            if th and td:
-                label = th.get_text(strip=True)
-                if '분배율' in label or '배당수익률' in label or 'yield' in label.lower():
-                    val = td.get_text(strip=True).replace('%', '').replace(',', '').strip()
-                    try:
-                        return float(val)
-                    except:
-                        pass
+        # 응답 구조: {"etfDividendList": [{"dividendPerUnit": 숫자, "recordDate": "YYYY.MM.DD"}, ...]}
+        div_list = data.get('etfDividendList', [])
+        if not div_list:
+            return 0.0
 
-        # 대안: 분배금수익률 div 파싱
-        for tag in soup.find_all(['td', 'dd', 'span']):
-            text = tag.get_text(strip=True)
-            if '%' in text:
-                val = text.replace('%', '').strip()
-                try:
-                    v = float(val)
-                    if 0.5 < v < 50:  # 합리적 배당률 범위
-                        return v
-                except:
-                    pass
+        # 최근 12개월 분배금 합산
+        from datetime import datetime, timedelta
+        cutoff = datetime.now() - timedelta(days=365)
+        annual_div = 0.0
+        for d in div_list:
+            date_str = d.get('recordDate', '')
+            amount = d.get('dividendPerUnit', 0) or 0
+            try:
+                dt = datetime.strptime(date_str, '%Y.%m.%d')
+                if dt >= cutoff:
+                    annual_div += float(amount)
+            except:
+                pass
+
+        if annual_div <= 0:
+            return 0.0
+
+        yield_pct = round(annual_div / current_price * 100, 2)
+        return yield_pct
+
     except Exception as e:
-        print(f"  [{code}] 파싱 오류: {e}")
-    return 0.0
-
-# ─────────────────────────────────────────────
-# Step 3. KRX API로 현재가 보완 (네이버 nowVal 우선 사용)
-# ─────────────────────────────────────────────
-def get_etf_price(code, fallback_price):
-    if fallback_price and fallback_price > 0:
-        return f"{int(fallback_price):,}원"
-    return "-"
+        print(f"  [{code}] 분배금 API 오류: {e}")
+        return 0.0
 
 # ─────────────────────────────────────────────
 # Main
@@ -88,23 +82,22 @@ try:
     for item in filtered_etfs:
         code = item.get('itemcode', '')
         name = item.get('itemname', '')
-        price = item.get('nowVal', 0)
+        price = item.get('nowVal', 0) or 0
 
         if not code:
             continue
 
-        yield_pct = get_yield_from_naver(code)
-        time.sleep(0.3)  # 과도한 요청 방지
+        yield_pct = get_yield_from_dividend_api(code, price)
+        time.sleep(0.2)
 
         if yield_pct <= 0:
-            print(f"  [{code}] {name} → 배당률 없음, 스킵")
             continue
 
         candidates.append({
             "ticker": code,
             "name": name,
-            "price": get_etf_price(code, price),
-            "yield": round(yield_pct, 2),
+            "price": f"{int(price):,}원" if price else "-",
+            "yield": yield_pct,
             "market": "KR"
         })
         print(f"  [{code}] {name} → {yield_pct}%")
@@ -114,6 +107,7 @@ try:
 
 except Exception as e:
     print(f"Error: {e}")
+    import traceback; traceback.print_exc()
 
 if not result_list:
     result_list = [{
