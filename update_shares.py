@@ -2,126 +2,81 @@ import json
 import requests
 from datetime import datetime
 import pytz
-import time
 
+# 네이버 증권 ETF 실시간 전체 리스트 API
+url = "https://finance.naver.com/api/sise/etfItemList.naver"
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     'Referer': 'https://finance.naver.com/'
 }
 
-# ─────────────────────────────────────────────
-# Step 1. 네이버 ETF 전체 리스트 + 현재가 수집
-# ─────────────────────────────────────────────
-def get_dividend_etf_list():
-    url = "https://finance.naver.com/api/sise/etfItemList.naver"
-    res = requests.get(url, headers=headers, timeout=15)
-    res.raise_for_status()
-    data = res.json()
-    etf_list = data.get('result', {}).get('etfItemList', [])
-    print(f"전체 ETF 수: {len(etf_list)}")
-
-    keywords = ['배당', '고배당', '커버드콜', '프리미엄', '타겟', 'DIVIDEND', 'Yield']
-    filtered = [
-        e for e in etf_list
-        if any(kw in e.get('itemname', '') for kw in keywords)
-    ]
-    print(f"배당 키워드 ETF 수: {len(filtered)}")
-    return filtered
-
-# ─────────────────────────────────────────────
-# Step 2. 네이버 ETF 분배금 API로 연간 배당률 계산
-#   /etf/etfDividendList.naver?etfCd={code}
-#   → 최근 12개월 분배금 합산 / 현재가 * 100
-# ─────────────────────────────────────────────
-def get_yield_from_dividend_api(code, current_price):
-    if not current_price or current_price <= 0:
-        return 0.0
-    try:
-        url = f"https://finance.naver.com/etf/etfDividendList.naver?etfCd={code}"
-        res = requests.get(url, headers=headers, timeout=10)
-        data = res.json()
-
-        # 응답 구조: {"etfDividendList": [{"dividendPerUnit": 숫자, "recordDate": "YYYY.MM.DD"}, ...]}
-        div_list = data.get('etfDividendList', [])
-        if not div_list:
-            return 0.0
-
-        # 최근 12개월 분배금 합산
-        from datetime import datetime, timedelta
-        cutoff = datetime.now() - timedelta(days=365)
-        annual_div = 0.0
-        for d in div_list:
-            date_str = d.get('recordDate', '')
-            amount = d.get('dividendPerUnit', 0) or 0
-            try:
-                dt = datetime.strptime(date_str, '%Y.%m.%d')
-                if dt >= cutoff:
-                    annual_div += float(amount)
-            except:
-                pass
-
-        if annual_div <= 0:
-            return 0.0
-
-        yield_pct = round(annual_div / current_price * 100, 2)
-        return yield_pct
-
-    except Exception as e:
-        print(f"  [{code}] 분배금 API 오류: {e}")
-        return 0.0
-
-# ─────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────
 result_list = []
 
 try:
-    filtered_etfs = get_dividend_etf_list()
+    res = requests.get(url, headers=headers, timeout=15)
+    res.raise_for_status()
+    data = res.json()
+    
+    etf_list = data.get('result', {}).get('etfItemList', [])
+    print(f"전체 ETF 수: {len(etf_list)}")
+    
     candidates = []
-
-    for item in filtered_etfs:
-        code = item.get('itemcode', '')
+    keywords = ['배당', '고배당', '커버드콜', '프리미엄', '타겟', 'DIVIDEND', 'Yield']
+    
+    for item in etf_list:
         name = item.get('itemname', '')
-        price = item.get('nowVal', 0) or 0
+        
+        # 배당 관련 키워드가 포함된 ETF 필터링
+        if any(kw in name for kw in keywords):
+            code = item.get('itemcode', '')
+            price = item.get('nowVal', 0) or 0
+            
+            # 네이버 ETF 기본 목록 API에서 제공하는 배당 수익률 항목 매핑
+            # 주말이나 마감 직후 간혹 null인 경우를 방지하기 위해 안전하게 처리
+            yield_pct = item.get('dividendYield')
+            if yield_pct is None:
+                yield_pct = 0.0
+            else:
+                try:
+                    yield_pct = float(yield_pct)
+                except:
+                    yield_pct = 0.0
+            
+            # 배당률이 0보다 큰 유효한 종목만 후보에 등록
+            if yield_pct > 0:
+                candidates.append({
+                    "ticker": code,
+                    "name": name,
+                    "price": f"{int(price):,}원" if price else "-",
+                    "yield": yield_pct,
+                    "market": "KR"
+                })
 
-        if not code:
-            continue
-
-        yield_pct = get_yield_from_dividend_api(code, price)
-        time.sleep(0.2)
-
-        if yield_pct <= 0:
-            continue
-
-        candidates.append({
-            "ticker": code,
-            "name": name,
-            "price": f"{int(price):,}원" if price else "-",
-            "yield": yield_pct,
-            "market": "KR"
-        })
-        print(f"  [{code}] {name} → {yield_pct}%")
-
+    # 배당률이 높은 순서대로 정렬한 뒤 상위 10개만 선택
     result_list = sorted(candidates, key=lambda x: x['yield'], reverse=True)[:10]
-    print(f"\n최종 TOP {len(result_list)}개 선정 완료")
+    print(f"성공적으로 {len(result_list)}개의 고배당 ETF를 추출했습니다.")
 
 except Exception as e:
-    print(f"Error: {e}")
-    import traceback; traceback.print_exc()
+    print(f"데이터 수집 에러: {e}")
 
+# 만약 차단 등으로 인해 데이터가 아예 없을 경우의 방어 코드
 if not result_list:
     result_list = [{
         "ticker": "-",
-        "name": "데이터를 일시적으로 가져올 수 없습니다.",
+        "name": "데이터 수집 조건을 만족하는 ETF가 없습니다.",
         "price": "-",
         "yield": 0.0,
         "market": "KR"
     }]
 
+# 한국 시간 기준으로 업데이트 시간 기록
 seoul_tz = pytz.timezone('Asia/Seoul')
 now = datetime.now(seoul_tz).strftime('%Y-%m-%d %H:%M:%S')
 
-output_data = {"updated_at": now, "list": result_list}
+output_data = {
+    "updated_at": now,
+    "list": result_list
+}
 
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(output_data, f, ensure_ascii=False, indent=4)
