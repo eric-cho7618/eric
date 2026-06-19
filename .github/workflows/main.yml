@@ -20,7 +20,7 @@ jobs:
 
     - name: 필요 라이브러리 설치
       run: |
-        pip install yfinance pytz
+        pip install yfinance pytz requests beautifulsoup4
 
     - name: 파이썬 스크립트 실행 (데이터 수집)
       run: python update_shares.py
