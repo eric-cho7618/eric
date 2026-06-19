@@ -3,7 +3,7 @@ import requests
 from datetime import datetime
 import pytz
 
-# 1. 네이버 금융 공식 ETF 리스트 API (국내 가상서버/GitHub Action에서도 차단 없음)
+# 네이버 금융 공식 ETF 리스트 API
 url = "https://finance.naver.com/api/sise/etfItemList.naver"
 
 headers = {
@@ -13,14 +13,12 @@ headers = {
 result_list = []
 
 try:
-    # 실시간 ETF 데이터 호출
     res = requests.get(url, headers=headers, timeout=10)
     res.raise_for_status()
     
-    # 네이버 API 결과 파싱
     data = res.json()
     etf_list = data.get('result', {}).get('etfItemList', [])
-    print(f"실시간으로 로드된 전체 상품 수: {len(etf_list)}")
+    print(f"전체 검색된 ETF 수: {len(etf_list)}")
     
     candidates = []
     keywords = ['배당', '고배당', '커버드콜', '프리미엄', '타겟', 'DIVIDEND', 'Yield']
@@ -28,39 +26,39 @@ try:
     for item in etf_list:
         name = item.get('itemname', '')
         code = item.get('itemcode', '')
-        price = item.get('nowVal', 0)
         
-        # 네이버 ETF API에서 제공하는 분배율(배당률) 필드: 'dividendYield'
-        yield_pct = item.get('dividendYield', 0.0)
+        # 문자열로 들어올 경우를 대비해 안전하게 에러 방지 처리
+        try:
+            price_raw = item.get('nowVal', 0)
+            price = int(price_raw) if price_raw is not None else 0
+            
+            yield_raw = item.get('dividendYield', 0.0)
+            yield_pct = float(yield_raw) if yield_raw is not None else 0.0
+        except (ValueError, TypeError):
+            continue  # 데이터 형식이 이상하면 해당 종목은 패스
         
-        # 고배당 관련 키워드가 이름에 포함되어 있는지 확인
-        if any(kw in name for kw in keywords):
-            try:
-                yield_pct = float(yield_pct)
-            except:
-                yield_pct = 0.0
-                
-            # 배당률이 유효한 상품만 후보군에 등록
-            if yield_pct > 0 and price:
+        # 키워드 매칭 (대소문자 구분 없이 처리)
+        if any(kw.lower() in name.lower() for kw in keywords):
+            if yield_pct > 0 and price > 0:
                 candidates.append({
-                    "ticker": code,
-                    "name": name,
-                    "price": f"{int(price):,}원",
+                    "ticker": str(code),
+                    "name": str(name),
+                    "price": f"{price:,}원",
                     "yield": round(yield_pct, 2),
                     "market": "KR"
                 })
 
-    # 실시간 배당률이 높은 순서대로 정렬 후 상위 10개 추출
+    # 배당률 기준 내림차순 정렬 후 상위 10개 칼같이 자르기
     if candidates:
         result_list = sorted(candidates, key=lambda x: x['yield'], reverse=True)[:10]
-        print(f"실시간 고배당 ETF {len(result_list)}개 매핑 성공!")
+        print(f"실시간 고배당 ETF {len(result_list)}개 정렬 및 추출 성공!")
 
 except Exception as e:
-    print(f"실시간 데이터 수집 실패 에러: {e}")
+    print(f"실시간 크롤링 중 예상치 못한 에러 발생: {e}")
 
-# [최종 방어선] API 장애 발생 등으로 데이터가 전혀 없을 때만 작동하는 백업 데이터
+# [진짜 최종 방어선] 만약 네이버 API 자체가 통째로 죽었을 때만 작동
 if not result_list:
-    print("시스템 경고: 실시간 API 데이터를 가져오지 못해 백업 리스트를 적용합니다.")
+    print("네이버 API 응답 없음 - 백업 데이터 작동")
     result_list = [
         {"ticker": "458730", "name": "TIGER 미국배당+7%프리미엄다우존스", "price": "10,250원", "yield": 10.45, "market": "KR"},
         {"ticker": "486290", "name": "PLUS 미국배당커버드콜고배당", "price": "9,840원", "yield": 9.82, "market": "KR"},
@@ -68,7 +66,7 @@ if not result_list:
         {"ticker": "161510", "name": "ARIRANG 고배당주", "price": "13,850원", "yield": 5.41, "market": "KR"}
     ]
 
-# 한국 시간(KST) 기준으로 최근 업데이트 시간 기록
+# 한국 시간(KST) 세팅
 seoul_tz = pytz.timezone('Asia/Seoul')
 now = datetime.now(seoul_tz).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -77,8 +75,8 @@ output_data = {
     "list": result_list
 }
 
-# 최종 data.json 파일 파일 쓰기
+# data.json 저장
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(output_data, f, ensure_ascii=False, indent=4)
 
-print(f"성공적으로 '{output_data['updated_at']}' 기준 data.json이 업데이트되었습니다.")
+print(f"업데이트 완료 시각: {now}")
