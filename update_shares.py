@@ -8,8 +8,7 @@ import pytz
 # 1. 미국 주식 및 ETF 티커 리스트
 us_tickers = ["JEPI", "JEPQ", "O", "MAIN"]
 
-# 2. 한국 주식 종목 코드 리스트 (예시: 맥쿼리인프라, 삼성전자우 등)
-# 보고 싶으신 한국 종목의 6자리 코드를 추가하시면 됩니다.
+# 2. 한국 주식 종목 코드 리스트 (원하는 종목을 계속 추가할 수 있습니다)
 kr_tickers = {
     "088980": "맥쿼리인프라",
     "005935": "삼성전자우",
@@ -23,6 +22,7 @@ for ticker_symbol in us_tickers:
     try:
         ticker = yf.Ticker(ticker_symbol)
         info = ticker.info
+        
         price = info.get('currentPrice') or info.get('regularMarketPrice') or 0
         dividend_yield = info.get('dividendYield', 0)
         yield_percent = round(dividend_yield * 100, 2) if dividend_yield else 0
@@ -31,7 +31,7 @@ for ticker_symbol in us_tickers:
         result_list.append({
             "ticker": ticker_symbol,
             "name": name,
-            "price": f"${price}",  # 달러 표시
+            "price": f"${price}" if price else "-",
             "yield": yield_percent,
             "market": "US"
         })
@@ -47,32 +47,37 @@ for code, default_name in kr_tickers.items():
         res = requests.get(url, headers=headers)
         soup = BeautifulSoup(res.text, 'html.parser')
         
-        # 현재가 추출
+        # 1. 현재가 추출
+        price = "-"
         today_div = soup.find('div', {'class': 'today'})
-        price_text = today_div.find('span', {'class': 'blind'}).text if today_div else "0"
-        price = price_text.strip()
+        if today_div:
+            blind_span = today_div.find('span', {'class': 'blind'})
+            if blind_span:
+                price = f"{blind_span.text.strip()}원"
         
-        # 배당수익률 추출
+        # 2. 배당수익률 추출
         yield_percent = 0.0
-        tbody = soup.find('table', {'summary': '주요재무정보 기업실적분석 제공'})
-        if tbody:
-            # 네이버 재무제표 테이블에서 가장 최근 배당수익률(%) 항목 찾기
-            rows = tbody.find_all('tr')
-            for row in rows:
-                if '배당수익률' in row.text:
-                    tds = row.find_all('td')
-                    # 최근 결산 혹은 예상 배당률 중 가장 오른쪽에 있는 유효한 값 선택
-                    for td in reversed(tds):
-                        val = td.text.strip().replace(',', '')
-                        if val and val != '-':
-                            yield_percent = float(val)
-                            break
-                    break
-        
+        # 종목 분석 영역 텍스트를 찾아서 배당수익률 파싱
+        aside = soup.find('div', {'id': 'aside'})
+        if aside:
+            encorp_info = aside.find('div', {'class': 'encorp_info'})
+            if encorp_info:
+                # 테이블 내부의 모든 행을 검사
+                for tr in encorp_info.find_all('tr'):
+                    if '배당수익률' in tr.text:
+                        th_or_td = tr.find('td') or tr.find('em')
+                        if th_or_td:
+                            val_text = th_or_td.text.strip().replace('%', '').replace(',', '')
+                            try:
+                                yield_percent = float(val_text)
+                            except ValueError:
+                                yield_percent = 0.0
+                        break
+                        
         result_list.append({
             "ticker": code,
             "name": default_name,
-            "price": f"{price}원",  # 원화 표시
+            "price": price,
             "yield": yield_percent,
             "market": "KR"
         })
@@ -91,7 +96,8 @@ output_data = {
     "list": result_list
 }
 
+# 최종 파일 저장 (오류가 나더라도 구조가 깨지지 않도록 보장)
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(output_data, f, ensure_ascii=False, indent=4)
 
-print("국내/해외 배당 데이터 합산 및 저장 완료!")
+print("안전하게 데이터 수집 및 data.json 저장 완료!")
