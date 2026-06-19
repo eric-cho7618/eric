@@ -40,6 +40,9 @@ jobs:
           
           git commit -m "Update daily dividend data"
           
+          # 충돌을 방지하기 위해 강제로 push (Force Push)
+          git push origin main --force
+          
           # 원격 저장소와 강제로 싱크를 맞춘 후 push (에러 방지)
           git fetch origin main
           git rebase origin/main
