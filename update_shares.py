@@ -1,90 +1,67 @@
-import yfinance as yf
 import json
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pytz
 
-# 1. 미국 주식 및 ETF 티커 리스트
-us_tickers = ["JEPI", "JEPQ", "O", "MAIN"]
-
-# 2. 한국 주식 종목 코드 리스트 (원하는 종목을 계속 추가할 수 있습니다)
-kr_tickers = {
-    "088980": "맥쿼리인프라",
-    "005935": "삼성전자우",
-    "379800": "KINDEX 미국고배당S&P"
+# 네이버 증권 배당 수익률 상위 페이지 URL
+url = "https://finance.naver.com/sise/dividend_list.naver"
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
 }
 
 result_list = []
 
-# --- [미국 주식 수집] ---
-for ticker_symbol in us_tickers:
-    try:
-        ticker = yf.Ticker(ticker_symbol)
-        info = ticker.info
+try:
+    res = requests.get(url, headers=headers)
+    # 네이버 증권은 EUK-KR(cp949) 인코딩을 사용하므로 한글 깨짐 방지 설정
+    res.encoding = 'cp949' 
+    soup = BeautifulSoup(res.text, 'html.parser')
+    
+    # 배당률 데이터가 있는 테이블 찾기
+    table = soup.find('table', {'class': 'type_2'})
+    if table:
+        rows = table.find_all('tr')
+        rank_count = 0
         
-        price = info.get('currentPrice') or info.get('regularMarketPrice') or 0
-        dividend_yield = info.get('dividendYield', 0)
-        yield_percent = round(dividend_yield * 100, 2) if dividend_yield else 0
-        name = info.get('shortName', ticker_symbol)
-
-        result_list.append({
-            "ticker": ticker_symbol,
-            "name": name,
-            "price": f"${price}" if price else "-",
-            "yield": yield_percent,
-            "market": "US"
-        })
-    except Exception as e:
-        print(f"Error fetching US {ticker_symbol}: {e}")
-
-# --- [한국 주식 수집 (네이버 증권)] ---
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'}
-
-for code, default_name in kr_tickers.items():
-    try:
-        url = f"https://finance.naver.com/item/main.naver?code={code}"
-        res = requests.get(url, headers=headers)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        
-        # 1. 현재가 추출
-        price = "-"
-        today_div = soup.find('div', {'class': 'today'})
-        if today_div:
-            blind_span = today_div.find('span', {'class': 'blind'})
-            if blind_span:
-                price = f"{blind_span.text.strip()}원"
-        
-        # 2. 배당수익률 추출
-        yield_percent = 0.0
-        # 종목 분석 영역 텍스트를 찾아서 배당수익률 파싱
-        aside = soup.find('div', {'id': 'aside'})
-        if aside:
-            encorp_info = aside.find('div', {'class': 'encorp_info'})
-            if encorp_info:
-                # 테이블 내부의 모든 행을 검사
-                for tr in encorp_info.find_all('tr'):
-                    if '배당수익률' in tr.text:
-                        th_or_td = tr.find('td') or tr.find('em')
-                        if th_or_td:
-                            val_text = th_or_td.text.strip().replace('%', '').replace(',', '')
-                            try:
-                                yield_percent = float(val_text)
-                            except ValueError:
-                                yield_percent = 0.0
-                        break
+        for row in rows:
+            # 상위 10개 종목만 수집하면 종료
+            if rank_count >= 10:
+                break
+                
+            tds = row.find_all('td')
+            # 정상적인 데이터가 들어있는 행인지 확인 (열 개수가 충분한지)
+            if len(tds) >= 7:
+                name_td = tds[0].find('a')
+                if name_td:
+                    name = name_td.text.strip()
+                    # 링크 주소에서 종목 코드(6자리) 추출
+                    href = name_td.get('href', '')
+                    code = href.split('code=')[-1] if 'code=' in href else '-'
+                    
+                    price = f"{tds[1].text.strip()}원" # 현재가
+                    
+                    # 네이버 배당 수익률 페이지 기준 (보통 5번째나 6번째 열에 배당수익률 위치)
+                    # 구조에 안전하게 접근하기 위해 % 기호가 붙은 열을 찾거나 고정 인덱스 활용
+                    try:
+                        yield_text = tds[5].text.strip().replace(',', '')
+                        yield_percent = float(yield_text)
+                    except ValueError:
+                        yield_percent = 0.0
                         
-        result_list.append({
-            "ticker": code,
-            "name": default_name,
-            "price": price,
-            "yield": yield_percent,
-            "market": "KR"
-        })
-    except Exception as e:
-        print(f"Error fetching KR {code}: {e}")
+                    result_list.append({
+                        "ticker": code,
+                        "name": name,
+                        "price": price,
+                        "yield": yield_percent,
+                        "market": "KR"
+                    })
+                    rank_count += 1
 
-# 배당률이 높은 순서대로 정렬
+except Exception as e:
+    print(f"Error fetching dividend top 10: {e}")
+
+# 혹시 몰라 배당률 순으로 한 번 더 정렬
 result_list = sorted(result_list, key=lambda x: x['yield'], reverse=True)
 
 # 한국 시간 기준으로 업데이트 시간 기록
@@ -96,8 +73,8 @@ output_data = {
     "list": result_list
 }
 
-# 최종 파일 저장 (오류가 나더라도 구조가 깨지지 않도록 보장)
+# 파일 저장
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(output_data, f, ensure_ascii=False, indent=4)
 
-print("안전하게 데이터 수집 및 data.json 저장 완료!")
+print("국내 고배당주 TOP 10 실시간 수집 및 저장 완료!")
