@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>월간 고배당률 리스트</title>
+    <title>글로벌 월간 고배당률 TOP 리스트</title>
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; max-width: 950px; margin: 40px auto; padding: 0 20px; background-color: #f9f9f9; }
-        h1 { color: #333; text-align: center; }
-        .update-time { text-align: right; color: #666; font-size: 0.9rem; margin-bottom: 10px; }
+        h1 { color: #333; text-align: center; margin-bottom: 5px; }
+        .update-time { text-align: right; color: #666; font-size: 0.9rem; margin-bottom: 15px; }
         table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         th, td { padding: 12px 15px; text-align: center; border-bottom: 1px solid #ddd; }
         th { background-color: #2c3e50; color: white; }
         tr:hover { background-color: #f1f1f1; }
-        .positive { color: #d9534f; font-weight: bold; }
         .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; }
-        .badge-us { background-color: #007bff; }
         .badge-kr { background-color: #28a745; }
     </style>
 </head>
@@ -41,42 +39,32 @@
     </table>
 
     <script>
-        fetch('data.json?v=' + String(new Date().getTime())) // 캐시 방지 처리
+        fetch('data.json?v=' + String(new Date().getTime()))
             .then(response => response.json())
             .then(data => {
                 document.getElementById('update-time').innerText = `최근 업데이트: ${data.updated_at || ''}`;
                 const tbody = document.getElementById('dividend-table');
                 tbody.innerHTML = '';
 
-                if (!data.list || data.list.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7">표시할 데이터가 없습니다.</td></tr>`;
-                    return;
-                }
-
                 data.list.forEach((item, index) => {
-                    // market 변수 누락 방어 코드 추가
-                    const marketType = item.market || 'KR';
-                    const marketBadge = marketType === 'US' 
-                        ? '<span class="badge badge-us">미국</span>' 
-                        : '<span class="badge badge-kr">한국</span>';
-
-                    const returnVal = item.return_1y || '0.00%';
+                    const marketBadge = '<span class="badge badge-kr">한국</span>';
+                    const returnVal = item.return_1y || '+0.00%';
                     const returnColor = returnVal.includes('-') ? 'color: #007bff;' : 'color: #d9534f; font-weight: bold;';
 
                     const row = `<tr>
                         <td>${index + 1}</td>
                         <td>${marketBadge}</td>
-                        <td><strong>${item.ticker || '-'}</strong></td>
-                        <td style="text-align: left;">${item.name || '정보 없음'}</td>
-                        <td>${item.price || '-'}</td>
+                        <td><strong>${item.ticker}</strong></td>
+                        <td style="text-align: left;">${item.name}</td>
+                        <td>${item.price}</td>
                         <td style="${returnColor}">${returnVal}</td>
-                        <td style="color: #28a745; font-weight: bold;">${item.dividend || '-'}</td>
+                        <td style="color: #28a745; font-weight: bold;">${item.dividend}</td>
                     </tr>`;
                     tbody.innerHTML += row;
                 });
             })
             .catch(err => {
-                document.getElementById('dividend-table').innerHTML = `<tr><td colspan="7">데이터를 불러오지 못했습니다. (JSON 에러)</td></tr>`;
+                document.getElementById('dividend-table').innerHTML = `<tr><td colspan="7">데이터를 불러오지 못했습니다.</td></tr>`;
             });
     </script>
 </body>
