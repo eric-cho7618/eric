@@ -1,275 +1,275 @@
 {
-    "updated_at": "2026-07-09 09:05:37",
+    "updated_at": "2026-07-10 09:00:33",
     "list": [
         {
             "ticker": "472150",
             "name": "TIGER 배당커버드콜액티브",
-            "price": "23,320원",
+            "price": "23,740원",
             "dividend": "510원",
             "pay_times": "연 12회",
             "return_1y": "+150.02%",
             "sort_rate": 150.02
         },
         {
-            "ticker": "0177R0",
-            "name": "TIGER 반도체TOP10커버드콜액티브",
-            "price": "13,475원",
-            "dividend": "40원",
-            "pay_times": "연 12회",
-            "return_1y": "+50.30%",
-            "sort_rate": 50.300000000000004
-        },
-        {
-            "ticker": "0127R0",
-            "name": "RISE 미국AI클라우드인프라",
-            "price": "17,940원",
-            "dividend": "53원",
-            "pay_times": "연 12회",
-            "return_1y": "+49.70%",
-            "sort_rate": 49.699999999999996
-        },
-        {
-            "ticker": "0190G0",
-            "name": "KODEX 반도체타겟위클리커버드콜",
-            "price": "9,845원",
-            "dividend": "29원",
-            "pay_times": "연 12회",
-            "return_1y": "+48.50%",
-            "sort_rate": 48.5
-        },
-        {
-            "ticker": "367760",
-            "name": "RISE 네트워크인프라",
-            "price": "65,340원",
-            "dividend": "196원",
-            "pay_times": "연 12회",
-            "return_1y": "+43.80%",
-            "sort_rate": 43.8
-        },
-        {
-            "ticker": "0086C0",
-            "name": "TIGER 리츠부동산인프라10채권혼합액티브",
-            "price": "10,235원",
-            "dividend": "30원",
-            "pay_times": "연 12회",
-            "return_1y": "+43.30%",
-            "sort_rate": 43.3
-        },
-        {
-            "ticker": "0176P0",
-            "name": "FOCUS AI반도체위클리고정커버드콜",
-            "price": "14,140원",
-            "dividend": "42원",
-            "pay_times": "연 12회",
-            "return_1y": "+37.40%",
-            "sort_rate": 37.400000000000006
-        },
-        {
-            "ticker": "289480",
-            "name": "TIGER 200커버드콜",
-            "price": "12,605원",
-            "dividend": "37원",
-            "pay_times": "연 12회",
-            "return_1y": "+35.70%",
-            "sort_rate": 35.699999999999996
-        },
-        {
             "ticker": "458730",
             "name": "TIGER 미국배당다우존스",
-            "price": "15,485원",
+            "price": "15,480원",
             "dividend": "95원",
             "pay_times": "연 12회",
             "return_1y": "32.63%",
             "sort_rate": 32.63
         },
         {
-            "ticker": "0210E0",
-            "name": "PLUS 200커버드콜액티브",
-            "price": "8,542원",
-            "dividend": "25원",
+            "ticker": "498400",
+            "name": "KODEX 200타겟위클리커버드콜",
+            "price": "22,890원",
+            "dividend": "68원",
             "pay_times": "연 12회",
-            "return_1y": "+32.30%",
-            "sort_rate": 32.3
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "480040",
-            "name": "ACE 미국반도체데일리타겟커버드콜(합성)",
-            "price": "18,530원",
-            "dividend": "55원",
-            "pay_times": "연 12회",
-            "return_1y": "+32.00%",
-            "sort_rate": 32.0
+            "ticker": "161510",
+            "name": "PLUS 고배당주",
+            "price": "24,430원",
+            "dividend": "73원",
+            "pay_times": "연 4회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "487130",
-            "name": "KoAct AI인프라액티브",
-            "price": "28,915원",
-            "dividend": "86원",
+            "ticker": "486290",
+            "name": "TIGER 미국나스닥100타겟데일리커버드콜",
+            "price": "11,720원",
+            "dividend": "35원",
             "pay_times": "연 12회",
-            "return_1y": "+31.60%",
-            "sort_rate": 31.6
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "487230",
+            "name": "KODEX 미국AI전력핵심인프라",
+            "price": "24,320원",
+            "dividend": "72원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "441640",
+            "name": "KODEX 미국배당커버드콜액티브",
+            "price": "13,425원",
+            "dividend": "40원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "329200",
+            "name": "TIGER 리츠부동산인프라",
+            "price": "4,010원",
+            "dividend": "12원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "446720",
+            "name": "SOL 미국배당다우존스",
+            "price": "14,200원",
+            "dividend": "42원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "494300",
+            "name": "KODEX 미국나스닥100데일리커버드콜OTM",
+            "price": "10,325원",
+            "dividend": "30원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "402970",
+            "name": "ACE 미국배당다우존스",
+            "price": "15,765원",
+            "dividend": "47원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
             "ticker": "475720",
             "name": "RISE 200위클리커버드콜",
-            "price": "14,080원",
-            "dividend": "42원",
+            "price": "13,755원",
+            "dividend": "41원",
             "pay_times": "연 12회",
-            "return_1y": "+30.00%",
-            "sort_rate": 30.0
-        },
-        {
-            "ticker": "498400",
-            "name": "KODEX 200타겟위클리커버드콜",
-            "price": "23,390원",
-            "dividend": "70원",
-            "pay_times": "연 12회",
-            "return_1y": "+29.90%",
-            "sort_rate": 29.900000000000002
-        },
-        {
-            "ticker": "315960",
-            "name": "RISE 대형고배당10TR",
-            "price": "87,500원",
-            "dividend": "262원",
-            "pay_times": "연 12회",
-            "return_1y": "+29.40%",
-            "sort_rate": 29.4
-        },
-        {
-            "ticker": "0167B0",
-            "name": "SOL 200타겟위클리커버드콜",
-            "price": "13,400원",
-            "dividend": "40원",
-            "pay_times": "연 12회",
-            "return_1y": "+29.20%",
-            "sort_rate": 29.2
-        },
-        {
-            "ticker": "0104N0",
-            "name": "TIGER 200타겟위클리커버드콜",
-            "price": "23,485원",
-            "dividend": "70원",
-            "pay_times": "연 12회",
-            "return_1y": "+27.10%",
-            "sort_rate": 27.1
-        },
-        {
-            "ticker": "476850",
-            "name": "KoAct 배당성장액티브",
-            "price": "23,305원",
-            "dividend": "69원",
-            "pay_times": "연 12회",
-            "return_1y": "+26.20%",
-            "sort_rate": 26.200000000000003
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
             "ticker": "441800",
             "name": "TIME Korea플러스배당액티브",
-            "price": "31,945원",
-            "dividend": "95원",
+            "price": "31,050원",
+            "dividend": "93원",
             "pay_times": "연 12회",
-            "return_1y": "+24.90%",
-            "sort_rate": 24.900000000000002
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "489010",
-            "name": "PLUS 글로벌AI인프라",
-            "price": "21,270원",
-            "dividend": "63원",
+            "ticker": "0177R0",
+            "name": "TIGER 반도체TOP10커버드콜액티브",
+            "price": "13,220원",
+            "dividend": "39원",
             "pay_times": "연 12회",
-            "return_1y": "+23.30%",
-            "sort_rate": 23.3
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "266160",
-            "name": "RISE 고배당",
-            "price": "36,485원",
-            "dividend": "109원",
+            "ticker": "476550",
+            "name": "TIGER 미국30년국채커버드콜액티브(H)",
+            "price": "7,065원",
+            "dividend": "21원",
             "pay_times": "연 12회",
-            "return_1y": "+22.00%",
-            "sort_rate": 22.0
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "0094M0",
-            "name": "RISE 코리아밸류업위클리고정커버드콜",
-            "price": "20,065원",
-            "dividend": "60원",
+            "ticker": "498410",
+            "name": "KODEX 금융고배당TOP10타겟위클리커버드콜",
+            "price": "11,680원",
+            "dividend": "35원",
             "pay_times": "연 12회",
-            "return_1y": "+21.40%",
-            "sort_rate": 21.400000000000002
-        },
-        {
-            "ticker": "490590",
-            "name": "RISE 미국AI밸류체인데일리고정커버드콜",
-            "price": "15,620원",
-            "dividend": "46원",
-            "pay_times": "연 12회",
-            "return_1y": "+20.60%",
-            "sort_rate": 20.6
-        },
-        {
-            "ticker": "290080",
-            "name": "RISE 200고배당커버드콜ATM",
-            "price": "6,835원",
-            "dividend": "20원",
-            "pay_times": "연 12회",
-            "return_1y": "+20.10%",
-            "sort_rate": 20.099999999999998
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
             "ticker": "491010",
             "name": "TIGER 글로벌AI전력인프라액티브",
-            "price": "31,070원",
-            "dividend": "93원",
+            "price": "31,430원",
+            "dividend": "94원",
             "pay_times": "연 12회",
-            "return_1y": "+18.70%",
-            "sort_rate": 18.700000000000003
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "486240",
-            "name": "DAISHIN343 AI반도체&인프라액티브",
-            "price": "30,140원",
-            "dividend": "90원",
+            "ticker": "490590",
+            "name": "RISE 미국AI밸류체인데일리고정커버드콜",
+            "price": "15,750원",
+            "dividend": "47원",
             "pay_times": "연 12회",
-            "return_1y": "+17.40%",
-            "sort_rate": 17.4
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "497780",
-            "name": "KoAct 미국천연가스인프라액티브",
-            "price": "11,590원",
+            "ticker": "466940",
+            "name": "TIGER 은행고배당플러스TOP10",
+            "price": "25,725원",
+            "dividend": "77원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "481060",
+            "name": "KODEX 미국30년국채타겟커버드콜(합성 H)",
+            "price": "7,675원",
+            "dividend": "23원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "367760",
+            "name": "RISE 네트워크인프라",
+            "price": "63,900원",
+            "dividend": "191원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "0167B0",
+            "name": "SOL 200타겟위클리커버드콜",
+            "price": "13,070원",
+            "dividend": "39원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "458760",
+            "name": "TIGER 미국배당다우존스타겟커버드콜2호",
+            "price": "11,510원",
             "dividend": "34원",
             "pay_times": "연 12회",
-            "return_1y": "+17.10%",
-            "sort_rate": 17.1
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "375270",
-            "name": "RISE 글로벌데이터센터리츠(합성)",
-            "price": "15,050원",
+            "ticker": "482730",
+            "name": "TIGER 미국S&P500타겟데일리커버드콜",
+            "price": "12,780원",
+            "dividend": "38원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "251600",
+            "name": "PLUS 고배당주채권혼합",
+            "price": "15,150원",
             "dividend": "45원",
-            "pay_times": "연 12회",
-            "return_1y": "+16.90%",
-            "sort_rate": 16.9
+            "pay_times": "연 4회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "0127V0",
-            "name": "KIWOOM 미국S&P500 TOP10&배당다우비중전환",
-            "price": "11,180원",
-            "dividend": "33원",
+            "ticker": "315960",
+            "name": "RISE 대형고배당10TR",
+            "price": "85,520원",
+            "dividend": "256원",
             "pay_times": "연 12회",
-            "return_1y": "+15.40%",
-            "sort_rate": 15.4
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         },
         {
-            "ticker": "0203D0",
-            "name": "PLUS 200위클리커버드콜채권혼합",
-            "price": "9,540원",
-            "dividend": "28원",
+            "ticker": "489250",
+            "name": "KODEX 미국배당다우존스",
+            "price": "13,360원",
+            "dividend": "40원",
             "pay_times": "연 12회",
-            "return_1y": "+14.90%",
-            "sort_rate": 14.9
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "0101N0",
+            "name": "RISE AI전력인프라",
+            "price": "18,405원",
+            "dividend": "55원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "0105E0",
+            "name": "SOL 코리아고배당",
+            "price": "12,940원",
+            "dividend": "38원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
+        },
+        {
+            "ticker": "491620",
+            "name": "RISE 미국테크100데일리고정커버드콜",
+            "price": "11,600원",
+            "dividend": "34원",
+            "pay_times": "연 12회",
+            "return_1y": "0.00%",
+            "sort_rate": 0.0
         }
     ]
 }
